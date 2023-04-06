@@ -1,0 +1,79 @@
+{
+  "name": "template",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "prepare": "husy install",
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint:js": "next lint",
+    "lint-fix": "next lint --fix",
+    "lint:css": "stylelint ./**/*.scss",
+    "lint": "npm-run-all --parallel lint:*",
+    "tsc": "tsc",
+    "test": "jest --watch",
+    "prettier": "prettier check \"**/*{js,jsx,json,ts,tsx,yaml}\"",
+    "prettier-fix": "prettier --write \"**/*{js,jsx,json,ts,tsx,yaml}\"",
+    "format": "npm-run-all tsc prettier-fix lint-fix"
+  },
+  "dependencies": {
+    "@reduxjs/toolkit": "^1.9.3",
+    "@types/node": "18.15.10",
+    "@types/react": "18.0.29",
+    "@types/react-dom": "18.0.11",
+    "axios": "^1.3.4",
+    "eslint": "8.36.0",
+    "eslint-config-next": "13.2.4",
+    "gsap": "^3.11.5",
+    "lodash": "^4.17.21",
+    "next": "13.2.4",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "react-redux": "^8.0.5",
+    "react-transition-group": "^4.4.5",
+    "styled-components": "^5.3.9",
+    "typescript": "5.0.2"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.21.3",
+    "@babel/plugin-syntax-flow": "^7.18.6",
+    "@babel/plugin-transform-react-jsx": "^7.21.0",
+    "@testing-library/jest-dom": "^5.16.5",
+    "@testing-library/react": "^14.0.0",
+    "@types/lodash": "^4.14.191",
+    "@types/styled-components": "^5.1.26",
+    "babel-loader": "^9.1.2",
+    "eslint-config-airbnb": "^19.0.4",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-config-prettier": "^8.8.0",
+    "eslint-config-react-app": "^7.0.1",
+    "eslint-plugin-import": "^2.27.5",
+    "eslint-plugin-jsx-a11y": "^6.7.1",
+    "eslint-plugin-react": "^7.32.2",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "eslint-plugin-storybook": "^0.6.11",
+    "eslint-plugin-testing-library": "^5.10.2",
+    "husky": "^8.0.3",
+    "jest": "^29.5.0",
+    "jest-environment-jsdom": "^29.5.0",
+    "npm-run-all": "^4.1.5",
+    "prettier": "^2.8.7"
+  },
+  "peerDependencies": {
+    "react-is": "^17.0.1",
+    "redux": "^4.1.1"
+  },
+  "lint-staged": {
+    "*.{js,jsx,ts,tsx,json,md,less}": [
+      "prettier --fix",
+      "git add"
+    ]
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged",
+      "prepare-commit-msg": "node ./scripts/prepare-commit-msg.js"
+    }
+  }
+}
