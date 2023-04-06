@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "prepare": "husy install",
+    "prepare": "husky install",
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
@@ -15,7 +15,7 @@
     "test": "jest --watch",
     "prettier": "prettier check \"**/*{js,jsx,json,ts,tsx,yaml}\"",
     "prettier-fix": "prettier --write \"**/*{js,jsx,json,ts,tsx,yaml}\"",
-    "format": "npm-run-all tsc prettier-fix lint-fix"
+    "format": "npm-run-all tsc prettier-fix lint"
   },
   "dependencies": {
     "@reduxjs/toolkit": "^1.9.3",

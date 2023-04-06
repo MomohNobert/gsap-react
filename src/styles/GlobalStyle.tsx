@@ -36,6 +36,7 @@ const GlobalStyle = createGlobalStyle`
     background-color: var(--lightestGrey);
     transition: background-color 0.25s linear;
     width: 100%;
+    background: #e1dfdd;
 
     // targeting the div created by Next.js, setting with to 100vw and cutting off overflow
     div#__next {
