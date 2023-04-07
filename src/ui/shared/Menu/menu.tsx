@@ -7,12 +7,13 @@ export function Menu({ isMenuOpen }: { isMenuOpen: boolean }) {
   const innerRef = useRef(null!);
   const outerRef = useRef(null!);
   const backgroundRef = useRef(null!);
+  const projectsRef = useRef(null!);
 
   return (
     <>
       {isMenuOpen && (
         <Style.Container>
-          <div className="project__wrapper">
+          <div className="project__wrapper" ref={projectsRef}>
             {projects.map((project) => (
               <MenuItems
                 key={project.id}
@@ -22,6 +23,7 @@ export function Menu({ isMenuOpen }: { isMenuOpen: boolean }) {
                 outerRef={outerRef}
                 innerRef={innerRef}
                 backgroundRef={backgroundRef}
+                projectsRef={projectsRef}
               />
             ))}
           </div>

@@ -1,6 +1,6 @@
 import { Style } from './styles';
 import { gsap } from 'gsap';
-import { MutableRefObject, useLayoutEffect } from 'react';
+import { MutableRefObject, useLayoutEffect, useRef } from 'react';
 
 export function MenuItems({
   name,
@@ -9,6 +9,7 @@ export function MenuItems({
   innerRef,
   outerRef,
   backgroundRef,
+  projectsRef,
 }: {
   name: string;
   bgColor: string;
@@ -16,8 +17,11 @@ export function MenuItems({
   innerRef: MutableRefObject<HTMLDivElement>;
   outerRef: MutableRefObject<HTMLDivElement>;
   backgroundRef: MutableRefObject<HTMLDivElement>;
+  projectsRef: MutableRefObject<HTMLDivElement>;
 }) {
   const getAllProjectItems = gsap.utils.toArray('.project__item');
+  const wordRef = useRef<HTMLSpanElement>(null!);
+  const wordRefClone = useRef<HTMLSpanElement>(null!);
 
   useLayoutEffect(() => {
     document.body.style.overflow = 'hidden';
@@ -35,13 +39,12 @@ export function MenuItems({
     };
   }, []);
 
-  function handleMouseEnter(event) {
-    const { image, color } = event.target.dataset;
+  function handleMouseEnter(event: React.MouseEvent<HTMLElement>) {
+    // TODO: Look around tacky workaround.
+    const { image, color } = (event.target as any).dataset;
     const getSiblings = getAllProjectItems.filter(
       (item) => item !== event.target,
     );
-
-    console.log(getSiblings);
 
     const tlEnter = gsap.timeline({
       defaults: {
@@ -83,10 +86,35 @@ export function MenuItems({
           autoAlpha: 0.2,
         },
         0,
+      )
+      .to(
+        wordRef.current.children,
+        {
+          y: '100%',
+          rotationX: -90,
+          opacity: 0,
+          duration: 0.5,
+          ease: 'power2',
+          stagger: 0.025,
+        },
+        0,
+      )
+      .to(
+        wordRefClone.current.children,
+        {
+          startAt: { y: '-100%', rotationX: 90, opacity: 0 },
+          y: '0%',
+          rotationX: 0,
+          opacity: 1,
+          duration: 0.5,
+          ease: 'power2',
+          stagger: 0.025,
+        },
+        0,
       );
   }
 
-  function handleMouseLeave(event) {
+  function handleMouseLeave() {
     const tlLeave = gsap.timeline({
       defaults: {
         duration: 1,
@@ -104,7 +132,48 @@ export function MenuItems({
           autoAlpha: 1,
         },
         0,
+      )
+      .to(
+        wordRef.current.children,
+        {
+          startAt: { y: '100%', rotationX: -90, opacity: 0 },
+          y: '0%',
+          rotationX: 0,
+          opacity: 1,
+          duration: 0.5,
+          ease: 'power2',
+          stagger: 0.025,
+        },
+        0,
+      )
+      .to(
+        wordRefClone.current.children,
+        {
+          y: '-100%',
+          rotationX: 90,
+          opacity: 0,
+          duration: 0.5,
+          ease: 'power2',
+          stagger: 0.025,
+        },
+        0,
       );
+  }
+
+  function handleMouseMove({
+    clientX,
+    clientY,
+  }: React.MouseEvent<HTMLElement>) {
+    const bound = projectsRef.current.getBoundingClientRect();
+    const xVal = clientX - (bound.left + Math.floor(bound.width / 2));
+    const yVal = clientY - (bound.top + Math.floor(bound.height / 2));
+
+    gsap.to(outerRef.current, {
+      duration: 1.2,
+      x: xVal,
+      y: yVal,
+      ease: 'none',
+    });
   }
 
   return (
@@ -115,8 +184,38 @@ export function MenuItems({
       data-image={src}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
+      onMouseMove={handleMouseMove}
     >
-      <span className="project__item--text">{name}</span>
+      <span className="project__item--text">
+        <span className="word" ref={wordRef}>
+          {name.split('').map((item, i) => (
+            <span
+              key={i}
+              className="char"
+              style={{
+                display: 'inline-block',
+                willChange: 'transform',
+              }}
+            >
+              {item}
+            </span>
+          ))}
+        </span>
+        <span className="word clone" ref={wordRefClone}>
+          {name.split('').map((item, i) => (
+            <span
+              key={i}
+              className="char"
+              style={{
+                display: 'inline-block',
+                willChange: 'transform',
+              }}
+            >
+              {item}
+            </span>
+          ))}
+        </span>
+      </span>
     </Style.Container>
   );
 }
