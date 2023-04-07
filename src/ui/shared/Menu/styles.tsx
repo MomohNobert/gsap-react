@@ -27,6 +27,7 @@ export const Style = {
       top: 20vh;
       z-index: 1;
       border-radius: 300px;
+      display: none;
     }
 
     .project__image--inner {

@@ -12,7 +12,7 @@ export default function MyApp({ Component, pageProps }: AppProps) {
     <>
       <GlobalStyle />
       <Header isMenuOpen={isMenuOpen} setIsMenuOpen={setIsMenuOpen} />
-      <Menu />
+      <Menu isMenuOpen={isMenuOpen} />
       <Component {...pageProps} />
     </>
   );
