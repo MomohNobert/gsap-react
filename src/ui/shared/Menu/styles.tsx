@@ -5,7 +5,8 @@ export const Style = {
     position: absolute;
     top: 0;
     left: 0;
-    width: 100%;
+    width: 100vw;
+    z-index: 10;
 
     .project__wrapper {
       display: flex;
@@ -27,7 +28,7 @@ export const Style = {
       top: 20vh;
       z-index: 1;
       border-radius: 300px;
-      display: none;
+      opacity: 0;
     }
 
     .project__image--inner {

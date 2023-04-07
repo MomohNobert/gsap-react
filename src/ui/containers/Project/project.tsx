@@ -3,6 +3,7 @@ import { Style } from './styles';
 export function Project() {
   const backgroundOne = '/images/background.avif';
   const backgroundTwo = '/images/model1.avif';
+
   return (
     <Style.Container>
       <h2 className="project__title">

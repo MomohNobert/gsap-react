@@ -1,8 +1,13 @@
 import { projects } from 'config/menu';
 import { Style } from './styles';
 import { MenuItems } from 'ui/containers/MenuItems/menuItems';
+import { useRef } from 'react';
 
 export function Menu({ isMenuOpen }: { isMenuOpen: boolean }) {
+  const innerRef = useRef(null!);
+  const outerRef = useRef(null!);
+  const backgroundRef = useRef(null!);
+
   return (
     <>
       {isMenuOpen && (
@@ -14,13 +19,16 @@ export function Menu({ isMenuOpen }: { isMenuOpen: boolean }) {
                 name={project.name}
                 bgColor={project.color}
                 src={project.image}
+                outerRef={outerRef}
+                innerRef={innerRef}
+                backgroundRef={backgroundRef}
               />
             ))}
           </div>
-          <div className="project__image--outer">
-            <div className="project__image--inner"></div>
+          <div className="project__image--outer" ref={outerRef}>
+            <div className="project__image--inner" ref={innerRef}></div>
           </div>
-          <Style.Background />
+          <Style.Background ref={backgroundRef} />
         </Style.Container>
       )}
     </>

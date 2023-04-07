@@ -4,7 +4,7 @@ export const Style = {
   Container: styled.header`
     width: 100%;
     position: absolute;
-    z-index: 4;
+    z-index: 15;
 
     .header__outer {
       max-width: 1417px;
